@@ -1,0 +1,38 @@
+# @usage
+# name: CodeQL
+#
+# on:
+#   push:
+#
+# permissions:
+#   actions: read
+#   checks: read
+#   contents: read
+#   security-events: write
+#
+# jobs:
+#   codeql:
+#     uses: route06/actions/.github/workflows/codeql.yml@v2
+
+
+name: Run CodeQL
+
+on:
+  workflow_call:
+
+jobs:
+  changes:
+    name: Filter Paths
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    outputs:
+      ruby: 'ruby'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+  ruby:
+    needs: changes
+    if: ${{ needs.changes.outputs.ruby == 'true' }}
+    uses: ./.github/workflows/codeql_core.yml
+    with:
+      language: "ruby"
