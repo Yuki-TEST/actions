@@ -33,6 +33,6 @@ jobs:
   ruby:
     needs: changes
     if: ${{ needs.changes.outputs.ruby == 'true' }}
-    uses: ./.github/workflows/codeql_core.yml
+    uses: ./.github/workflows/codeql-core.yml
     with:
       language: "ruby"
